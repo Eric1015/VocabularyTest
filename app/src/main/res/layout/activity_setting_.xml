@@ -9,19 +9,32 @@
     <TextView
         android:id="@+id/setting_message"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="107dp"
+        android:text="@string/setting_message"
+        android:textSize="24sp"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <Spinner
         android:id="@+id/category_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/category_list">
-    </Spinner>
+        android:layout_marginTop="35dp"
+        android:entries="@array/category_list"
+        android:visibility="visible"
+        android:layout_below="@+id/setting_message"
+        android:layout_centerHorizontal="true"></Spinner>
 
     <Button
         android:id="@+id/start_button_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_button_setting"
-        android:onClick="onStartButtonClickSetting">
+        android:onClick="onStartButtonClickSetting"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="128dp">
     </Button>
 </RelativeLayout>

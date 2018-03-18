@@ -5,22 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="hangman.love1.longmandictionaryvocabularytest.EndActivity">
+    tools:context="hangman.love1.longmandictionaryvocabularytest.End_Activity">
+
+    <TextView
+        android:id="@+id/end_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="84dp"
+        android:text="@string/end_message"
+        android:textSize="24sp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:onClick="onEndClick"
-        android:text="@string/end_button"
-        android:textSize="50sp"/>
+        android:onClick="onStartAgainClick"
+        android:text="@string/start_again_button"
+        android:id="@+id/button2"
+        android:layout_marginTop="76dp" />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:onClick="onResetClick"
-        android:text="@string/reset_button"
-        android:textSize="50sp"/>
+        android:onClick="onDoneClick"
+        android:text="@string/done_button"
+        android:layout_marginTop="48dp" />
 
 </LinearLayout>
