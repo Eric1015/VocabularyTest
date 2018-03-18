@@ -19,7 +19,6 @@ public class Main_Activity extends Activity {
         imageView = (ImageView)findViewById(R.id.photo);
         if (savedInstanceState == null) {
             Word word = new Word();
-            int a = 0;
             word.setUp();
             refresh();
         }
