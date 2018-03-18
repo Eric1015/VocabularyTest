@@ -2,25 +2,53 @@ package hangman.love1.longmandictionaryvocabularytest;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Main_Activity extends Activity {
+    private ArrayList<Word> wordList = new ArrayList<>();
     ImageView imageView;
     String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vocabulary_test);
+        setContentView(R.layout.activity_main);
         imageView = (ImageView)findViewById(R.id.photo);
         if (savedInstanceState == null) {
-            Word word = new Word();
-            word.setUp();
-            refresh();
+            Intent intent = getIntent();
+            ArrayList<String> categoryList = intent.getStringArrayListExtra("CategoryList");
+            try {
+                SQLiteOpenHelper vocabularyTestDatabaseHelper = new VocabularyTestDatabaseHelper(this);
+                SQLiteDatabase db = vocabularyTestDatabaseHelper.getReadableDatabase();
+                for (int i = 0; i < categoryList.size(); i++) {
+                    String currentCategory = categoryList.get(i);
+                    Cursor cursor = db.query("VOCABULARY",
+                            new String[] {"NAME", "CATEGORY", "RESOURCE_ID"},
+                            "CATEGORY = ?",
+                            new String[]{currentCategory},
+                            null, null, null);
+                    String name = cursor.getString(0);
+                    int resourceId = cursor.getInt(2);
+                    Word word = new Word(name, resourceId);
+                    wordList.add(word);
+                }
+            }
+            catch (SQLiteException e){
+                Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            Collections.shuffle(wordList);
         }
         else{
             Word.WORDS = savedInstanceState.getStringArrayList("wordArray");
@@ -79,7 +107,7 @@ public class Main_Activity extends Activity {
             imageView.setImageResource(Word.MAP.get(key));
         }
         else{
-            Intent intent = new Intent(this, EndActivity.class);
+            Intent intent = new Intent(this, End_Activity.class);
             startActivity(intent);
         }
     }

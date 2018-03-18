@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 public class Setting_Activity extends Activity {
-    private Stack<String> categoryList = new Stack<>();
+    private ArrayList<String> categoryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

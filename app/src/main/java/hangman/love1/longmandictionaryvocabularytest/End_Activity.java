@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class EndActivity extends AppCompatActivity {
+public class End_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,12 +13,12 @@ public class EndActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end);
     }
 
-    public void onEndClick(View view){
+    public void onDoneClick(View view){
         finishAffinity();
     }
 
-    public void onResetClick(View view){
-        Intent intent = new Intent(this, Main_Activity.class);
+    public void onStartAgainClick(View view){
+        Intent intent = new Intent(this, Setting_Activity.class);
         startActivity(intent);
     }
 }
