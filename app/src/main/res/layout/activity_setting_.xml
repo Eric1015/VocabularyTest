@@ -16,21 +16,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Spinner
-        android:id="@+id/category_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:entries="@array/category_list"
-        android:visibility="visible"
-        android:layout_below="@+id/setting_message"
-        android:layout_centerHorizontal="true"></Spinner>
-
-    <TextView
-        android:id="@+id/selected_categories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/start_button_setting"
         android:layout_width="wrap_content"
@@ -41,4 +26,47 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="128dp">
     </Button>
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setting_message"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:onClick="onSwitch1Click"
+        android:text="All " />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Animals "
+        android:layout_alignBaseline="@+id/switch3"
+        android:layout_alignBottom="@+id/switch3"
+        android:layout_toLeftOf="@+id/switch3"
+        android:layout_toStartOf="@+id/switch3"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp" />
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/switch1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Occupation " />
+
+    <Switch
+        android:id="@+id/switch4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food"
+        android:layout_alignBaseline="@+id/switch3"
+        android:layout_alignBottom="@+id/switch3"
+        android:layout_toRightOf="@+id/switch3"
+        android:layout_toEndOf="@+id/switch3"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp" />
 </RelativeLayout>

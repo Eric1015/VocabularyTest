@@ -11,14 +11,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class VocabularyTestDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "Vocabulary Test";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 1;
 
     VocabularyTestDatabaseHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
+        System.out.println("Get to the constructor of VocabularyTestDatabaseHelper");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db){
+        System.out.println("Getting to onCreate of VocabularyTestDatabaseHelper");
         updateMyDatabase(db, 0, DB_VERSION);
     }
 
@@ -28,7 +30,7 @@ public class VocabularyTestDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
-        if (oldVersion < 1) {
+        if (oldVersion < 2) {
             db.execSQL("CREATE TABLE VOCABULARY (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
                     + "CATEGORY TEXT, "
@@ -41,6 +43,9 @@ public class VocabularyTestDatabaseHelper extends SQLiteOpenHelper {
             insertWord(db, "police_officer", "Occupation", R.drawable.police_officer);
             insertWord(db, "model", "Occupation", R.drawable.model);
             insertWord(db, "teacher", "Occupation", R.drawable.teacher);
+            insertWord(db, "pizza", "Food", R.drawable.pizza);
+            insertWord(db, "spaghetti", "Food", R.drawable.spaghetti);
+            insertWord(db, "hamburger", "Food", R.drawable.hamburger);
         }
     }
 

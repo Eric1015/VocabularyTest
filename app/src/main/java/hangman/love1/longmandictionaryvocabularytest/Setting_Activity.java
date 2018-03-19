@@ -4,52 +4,57 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Switch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class Setting_Activity extends Activity implements AdapterView.OnItemSelectedListener{
-    private ArrayList<String> categoryList = new ArrayList<>();
+public class Setting_Activity extends Activity {
+    private List<String> categoryList = new ArrayList<>();
+    private List<Switch> switches = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_);
-        Spinner spinner = (Spinner)findViewById(R.id.category_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category_list, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        Switch switch2 = (Switch)findViewById(R.id.switch2);
+        Switch switch3 = (Switch)findViewById(R.id.switch3);
+        Switch switch4 = (Switch)findViewById(R.id.switch4);
+        switches.add(switch2);
+        switches.add(switch3);
+        switches.add(switch4);
     }
 
     public void onStartButtonClickSetting(View v){
         Intent intent = new Intent(this, Main_Activity.class);
-        intent.putExtra("CategoryList", categoryList);
+        Switch switch1 = (Switch) findViewById(R.id.switch1);
+        boolean on = switch1.isChecked();
+        if (on){
+            categoryList = Arrays.asList(getResources().getStringArray(R.array.category_list));
+        }
+        else{
+            List<String> list = Arrays.asList(getResources().getStringArray(R.array.category_list));
+            for (int i = 0; i < switches.size(); i++){
+                if (switches.get(i).isChecked()){
+                    categoryList.add(list.get(i + 1));
+                }
+            }
+        }
+        intent.putExtra("CategoryList", (ArrayList<String>)categoryList);
         startActivity(intent);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
-        String item = parent.getItemAtPosition(pos).toString();
-        TextView currentList = (TextView)findViewById(R.id.selected_categories);
-        if (item.equals("All"))
-            currentList.setText("All");
-        else if (!item.equals("Select")){
-            CharSequence currentSequence = currentList.getText();
-            String current = currentSequence.toString();
-            current += " ";
-            current += item;
-            currentList.setText(current);
+    public void onSwitch1Click(View view){
+       boolean on = ((Switch) view).isChecked();
+        if (on){
+            for (int i = 0; i < switches.size(); i++)
+                switches.get(i).setVisibility(View.INVISIBLE);
+        }
+        else{
+            for (int i = 0; i < switches.size(); i++)
+                switches.get(i).setVisibility(View.VISIBLE);
         }
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent){
-        CharSequence text = "No items selected";
-        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
-        toast.show();
-    }
 }

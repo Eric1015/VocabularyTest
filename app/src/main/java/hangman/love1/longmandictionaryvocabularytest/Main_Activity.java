@@ -24,13 +24,15 @@ public class Main_Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = (ImageView)findViewById(R.id.photo);
         if (savedInstanceState == null) {
             Intent intent = getIntent();
+            System.out.println("Get intent from Setting_Activity");
             ArrayList<String> categoryList = intent.getStringArrayListExtra("CategoryList");
+            System.out.println("Convert the category list into here");
             try {
                 SQLiteOpenHelper vocabularyTestDatabaseHelper = new VocabularyTestDatabaseHelper(this);
                 SQLiteDatabase db = vocabularyTestDatabaseHelper.getReadableDatabase();
+                System.out.println("SQLiteDatabase created successfully");
                 for (int i = 0; i < categoryList.size(); i++) {
                     String currentCategory = categoryList.get(i);
                     Cursor cursor = db.query("VOCABULARY",
@@ -38,11 +40,15 @@ public class Main_Activity extends Activity {
                             "CATEGORY = ?",
                             new String[]{currentCategory},
                             null, null, null);
-                    String name = cursor.getString(0);
-                    int resourceId = cursor.getInt(2);
-                    Word word = new Word(name, resourceId);
-                    wordList.add(word);
+                    if (cursor.moveToFirst()) {
+                        String name = cursor.getString(0);
+                        int resourceId = cursor.getInt(2);
+                        Word word = new Word(name, resourceId);
+                        wordList.add(word);
+                    }
+                    cursor.close();
                 }
+                db.close();
             }
             catch (SQLiteException e){
                 Toast toast = Toast.makeText(this, "Database unavailable", Toast.LENGTH_SHORT);
@@ -91,6 +97,7 @@ public class Main_Activity extends Activity {
             toast.show();
 
             editText.setText("");
+            wordList.remove(wordList.size() - 1);
 
             refresh();
         }
@@ -107,12 +114,12 @@ public class Main_Activity extends Activity {
         CharSequence text = key + " is the correct answer";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.show();
+        wordList.remove(wordList.size() - 1);
 
         refresh();
     }
 
     private void refresh(){
-        wordList.remove(wordList.size() - 1);
         if (wordList.size() > 0) {
             Word word = wordList.get(wordList.size() - 1);
             key = word.getName();
