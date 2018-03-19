@@ -14,8 +14,11 @@
     <string name="done_button">Done</string>
     <string-array name="category_list">
         <item name="select">Select</item>
+        <item name="all">All</item>
         <item name="animals">Animals</item>
+        <item name="occupation">Occupation</item>
     </string-array>
+    <string-array name="selected_list"></string-array>
 
 
 

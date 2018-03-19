@@ -20,6 +20,14 @@ public class Word {
         this.resourceId = resourceId;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public int getResourceId(){
+        return resourceId;
+    }
+
     public void setUp(){
         Clothing clothing = new Clothing();
         FootWear footWear = new FootWear();

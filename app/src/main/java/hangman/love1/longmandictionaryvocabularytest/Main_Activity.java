@@ -49,11 +49,18 @@ public class Main_Activity extends Activity {
                 toast.show();
             }
             Collections.shuffle(wordList);
+            refresh();
         }
         else{
-            Word.WORDS = savedInstanceState.getStringArrayList("wordArray");
-            key = savedInstanceState.getString("currentWord");
-            imageView.setImageResource(Word.MAP.get(key));
+            ArrayList<String> nameArray = savedInstanceState.getStringArrayList("nameList");
+            ArrayList<Integer> resourceArray = savedInstanceState.getIntegerArrayList("resourceList");
+            for (int i = 0; i < nameArray.size(); i++){
+                Word word = new Word(nameArray.get(i), resourceArray.get(i));
+                wordList.add(word);
+            }
+            Word currentWord = wordList.get(wordList.size() - 1);
+            key = currentWord.getName();
+            imageView = (ImageView)findViewById(currentWord.getResourceId());
             EditText editText = (EditText)findViewById(R.id.typedAnswer);
             editText.setText(savedInstanceState.getString("currentEditText"));
         }
@@ -61,8 +68,15 @@ public class Main_Activity extends Activity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
-        savedInstanceState.putStringArrayList("wordArray", Word.WORDS);
-        savedInstanceState.putString("currentWord", key);
+        ArrayList<String> nameArray = new ArrayList<>();
+        ArrayList<Integer> resourceArray = new ArrayList<>();
+        for (int i = 0; i < wordList.size(); i++){
+            Word word = wordList.get(i);
+            nameArray.add(word.getName());
+            resourceArray.add(word.getResourceId());
+        }
+        savedInstanceState.putStringArrayList("nameList", nameArray);
+        savedInstanceState.putIntegerArrayList("resourceList", resourceArray);
         EditText editText = (EditText)findViewById(R.id.typedAnswer);
         String typedAnswer = editText.getText().toString();
         savedInstanceState.putString("currentEditText", typedAnswer);
@@ -73,8 +87,7 @@ public class Main_Activity extends Activity {
         String typedAnswer = editText.getText().toString().trim();
         if (typedAnswer.equals(key)){
             CharSequence text = "Correct!!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
+            Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
             toast.show();
 
             editText.setText("");
@@ -83,8 +96,7 @@ public class Main_Activity extends Activity {
         }
         else{
             CharSequence text = "Wrong!!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
+            Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
             toast.show();
 
             editText.setText("");
@@ -93,18 +105,18 @@ public class Main_Activity extends Activity {
 
     public void onGiveUpClick(View view){
         CharSequence text = key + " is the correct answer";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
+        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.show();
 
         refresh();
     }
 
     private void refresh(){
-        if (Word.WORDS.size() != 0) {
-            int randomIndex = (int) (Math.random() * Word.WORDS.size());
-            key = Word.WORDS.remove(randomIndex);
-            imageView.setImageResource(Word.MAP.get(key));
+        wordList.remove(wordList.size() - 1);
+        if (wordList.size() > 0) {
+            Word word = wordList.get(wordList.size() - 1);
+            key = word.getName();
+            imageView.setImageResource(word.getResourceId());
         }
         else{
             Intent intent = new Intent(this, End_Activity.class);
