@@ -15,10 +15,16 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string-array name="category_list">
+        <item name="animals">Animals</item>
+        <item name="occupation">Occupation</item>
+        <item name="food">Food</item>
+    </string-array>
+    <string-array name="choice_list">
         <item name="select">Select</item>
         <item name="all">All</item>
         <item name="animals">Animals</item>
         <item name="occupation">Occupation</item>
+        <item name="food">Food</item>
     </string-array>
     <string-array name="selected_list"></string-array>
 

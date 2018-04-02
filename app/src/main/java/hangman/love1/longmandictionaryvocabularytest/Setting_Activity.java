@@ -34,14 +34,18 @@ public class Setting_Activity extends Activity {
             categoryList = Arrays.asList(getResources().getStringArray(R.array.category_list));
         }
         else{
-            List<String> list = Arrays.asList(getResources().getStringArray(R.array.category_list));
+            List<String> list = Arrays.asList(getResources().getStringArray(R.array.choice_list));
             for (int i = 0; i < switches.size(); i++){
                 if (switches.get(i).isChecked()){
-                    categoryList.add(list.get(i + 1));
+                    categoryList.add(list.get(i + 2));
                 }
             }
         }
-        intent.putExtra("CategoryList", (ArrayList<String>)categoryList);
+        ArrayList<String> finalList = new ArrayList<>();
+        for (int i = 0; i < categoryList.size(); i++){
+            finalList.add(categoryList.get(i));
+        }
+        intent.putExtra("CategoryList", finalList);
         startActivity(intent);
     }
 
