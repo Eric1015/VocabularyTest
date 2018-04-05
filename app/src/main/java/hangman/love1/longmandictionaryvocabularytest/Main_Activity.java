@@ -28,7 +28,14 @@ public class Main_Activity extends Activity {
             ArrayList<String> categoryList = intent.getStringArrayListExtra("CategoryList");
             for (int i = 0; i < categoryList.size(); i++) {
                 String currentCategory = categoryList.get(i);
-                addElement(currentCategory);
+                boolean addSuccess = addElement(currentCategory);
+                if (addSuccess){
+                    Toast toast = Toast.makeText(this, "Data is read successfully", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else{
+                    Toast toast = Toast.makeText(this, "Error on Data read", Toast.LENGTH_LONG);
+                }
             }
             Collections.shuffle(wordList);
             refresh();
@@ -50,16 +57,17 @@ public class Main_Activity extends Activity {
         }
     }
 
-    private void addElement(String category){
+    private boolean addElement(String category){
         Cursor cursor = myDb.getCursorByCategory(category);
         if (cursor.getCount() == 0)
-            return;
+            return false;
         while(cursor.moveToNext()){
             String name = cursor.getString(0);
             int resourceId = cursor.getInt(2);
             Word word = new Word(name, resourceId);
             wordList.add(word);
         }
+        return true;
     }
 
     @Override
